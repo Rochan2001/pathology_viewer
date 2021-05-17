@@ -6,20 +6,62 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'pathology_viewer/style.css' %}">
-    <script  src="{% static 'pathology_viewer/app.js' %}"></script>
+    <!-- <script type="text/javascript"  src="{% static 'pathology_viewer/app.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'pathology_viewer/openseadragon/openseadragon.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="init_osd({{ uploaded_file_url }})">
     {% if uploaded_file_url %}
         <button style="visibility:hidden" ></button>
-        <img src="{{ uploaded_file_url }}" alt="{{ uploaded_file_url }}">
+        <!-- <img src="{{ uploaded_file_url }}" alt="{{ uploaded_file_url }}">-->
+         <center>
+              <div
+                class="row"
+                style="display: grid; grid-template-columns: 1fr 1fr; width: 100%"
+              >
+                <div class="column">
+                  <div id="toolbar-container1"></div>
+                  <div
+                    id="openseadragon1"
+                    style="
+                      width: 600px./;
+                      height: 600px;
+                      justify-self: center;
+                      border-style: solid;
+                    "
+                  ></div>
+                </div>
+                <div class="column">
+                  <div id="toolbar-container2"></div>
+                  <div
+                    id="openseadragon2"
+                    style="
+                      width: 600px;
+                      height: 600px;
+                      justify-self: center;
+                      border-style: solid;
+                    "
+                  ></div>
+                </div>
+              </div>
+            </center>
     {% else %}
         <p>No image available.</p>
     {% endif %}
     <script>
-        var data = "{{ uploaded_file_url|safe }}" 
-        alert(data);
+        var filename = "{{ uploaded_file_url|safe }}" 
+        var path = filename + ".dzi"
+        var image_path = "{% static 'pathology_viewer/openseadragon/images/' %}"
+        console.log(path)
+        var viewer1 = OpenSeadragon({
+          id: "openseadragon1",
+          prefixUrl: image_path ,
+          tileSources: path,
+          visibilityRatio: 1.0,
+          constrainDuringPan: true,
+          debugMode: false,
+        });
     </script>
 </body>
 </html>
