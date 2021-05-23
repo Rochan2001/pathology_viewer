@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^%i01kevff_o6)5+y*d0@cu14%6ajv3qz25*!zz-*xh#xnz#^%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['183.82.46.36','183.82.46.37']
 
 
 # Application definition
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'pathology_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR.as_posix()+ 'db.sqlite3',
     }
 }
 
